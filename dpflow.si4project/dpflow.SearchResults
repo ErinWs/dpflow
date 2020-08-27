@@ -1,0 +1,15 @@
+---- formatData4fixDot Matches (14 in 5 files) ----
+pressOverloadReport in device.c (user_src) : //            temp=formatData4fixDot(this->current_press);
+irc.c (user_src) line 98 : long formatData4fixDot(long temp)
+Pro_irc in irc.c (user_src) : 					temp=formatData4fixDot(device_comps.calibration_param.y[3]);
+Pro_irc in irc.c (user_src) : 					temp=formatData4fixDot(device_comps.current_press);                                        
+Pro_irc in irc.c (user_src) : 					temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3]);
+Pro_irc in irc.c (user_src) : 					temp=formatData4fixDot(device_comps.current_deltaP;                                        
+irc.h (user_src) line 25 : extern  long formatData4fixDot(long temp);
+add_measure_data in lora.c (user_src) :         	temp=formatData4fixDot(device_comps.calibration_param.y[3]);
+add_measure_data in lora.c (user_src) :         	temp=formatData4fixDot(device_comps.current_press);                                        
+add_measure_data in lora.c (user_src) :         	temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3]);
+add_measure_data in lora.c (user_src) : 			temp=formatData4fixDot(device_comps.current_deltaP;                                        
+AddTimeDataSeg in protocol.c (user_src) :         temp=formatData4fixDot(  *((long *)&buf[m*4]) );
+Encapsulate_dataPush_package in protocol.c (user_src) :     temp=formatData4fixDot(device_comps.calibration_param.y[3]);
+Encapsulate_dataPush_package in protocol.c (user_src) :     temp=formatData4fixDot(device_comps.current_press);                                         
