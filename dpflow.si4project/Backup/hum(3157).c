@@ -657,8 +657,6 @@ void enter_lora_mode(void)
     hum_comps.dis_oper_mark._bit.cur0=0;
     hum_comps.dis_oper_mark._bit.cur1=0;
     hum_comps.dis_oper_mark._bit.cur2=0;
-    hum_comps.dis_oper_mark._bit.cur3=0;
-    hum_comps.dis_oper_mark._bit.cur4=0;
 
 }
 void enter_cal_modify_mode()
@@ -1453,24 +1451,13 @@ static void air_leak_mode_on_long_m_key(void)
 static void lora_mode_on_m_key(void)
 {
     mode_comps[hum_comps.current_mode].dis_option++;
-    mode_comps[hum_comps.current_mode].dis_option%=2;
-    clr_lcd();
+    mode_comps[hum_comps.current_mode].dis_option%=8;
     hum_comps.dis_oper_mark.All|=0x0000ff00;
-    if(mode_comps[hum_comps.current_mode].dis_option>0)
+    if(mode_comps[hum_comps.current_mode].dis_option>2)
     {
-        hum_comps.dis_oper_mark._bit.cur0=0;
-        hum_comps.dis_oper_mark._bit.cur1=0;
         hum_comps.dis_oper_mark._bit.cur2=0;
-        hum_comps.dis_oper_mark._bit.cur3=0;
-        hum_comps.dis_oper_mark._bit.cur4=0;
-        
     }
     mode_comps[hum_comps.current_mode].displayTimer=-1;
-}
-
-static void lora_mode_on_long_m_key(void)
-{
-    enter_pawd_mode();
 }
 
 
@@ -3226,82 +3213,6 @@ static void display_temp_to_line2(void)
 static void lora_mode_display(unsigned char opt) 
 {
 
-  
-    switch(opt)
-    {
-           case 0:
-
-                    display_temp(opt);
-                    display_press(opt);
-                    display_deltaP(opt);
-                    display_Flow(opt);
-                    display_Total(opt);
-                break;
-           case 1:
-                    if(hum_comps.dis_oper_mark._bit.refresh_device_id_high)
-                    {
-                        if(loraComps.sw._bit.noParameter)
-                        {
-                            hum_comps.dot0_pos=0;
-                            hum_comps.dig0_0=MD_HIDE_DISP-1;
-                            hum_comps.dig0_1=MD_HIDE_DISP-1;
-                            hum_comps.dig0_2=MD_HIDE_DISP-1;
-                            hum_comps.dig0_3=MD_HIDE_DISP-1;
-                            hum_comps.dig0_4=MD_HIDE_DISP-1;
-                            hum_comps.dig0_5=MD_HIDE_DISP-1;
-                            
-                            hum_comps.dot2_pos=0;
-                            hum_comps.dig2_0=MD_HIDE_DISP-1;
-                            hum_comps.dig2_1=MD_HIDE_DISP-1;
-                            hum_comps.dig2_2=MD_HIDE_DISP-1;
-                            hum_comps.dig2_3=MD_HIDE_DISP-1;
-                            hum_comps.dig2_4=MD_HIDE_DISP-1;
-                            hum_comps.dig2_5=MD_HIDE_DISP-1;
-                        }
-                        else 
-                        {
-                            hum_comps.dot0_pos=0;
-                            hum_comps.dig0_0=(loraComps.yl701_info_p->freq)&0x0000000f;
-                            hum_comps.dig0_1=(loraComps.yl701_info_p->freq>>4)&0x0000000f;
-                            hum_comps.dig0_2=(loraComps.yl701_info_p->freq>>8)&0x0000000f;
-                            hum_comps.dig0_3=(loraComps.yl701_info_p->freq>>12)&0x0000000f;
-                            hum_comps.dig0_4=(loraComps.yl701_info_p->freq>>16)&0x0000000f;
-                            hum_comps.dig0_5=(loraComps.yl701_info_p->freq>>20)&0x0000000f;
-
-                            hum_comps.dot2_pos=0;
-                            hum_comps.dig2_0=loraComps.yl701_info_p->NodeId%10;
-                            hum_comps.dig2_1=loraComps.yl701_info_p->NodeId/10%10;
-                            hum_comps.dig2_2=loraComps.yl701_info_p->NodeId/100%10;
-                            hum_comps.dig2_3=loraComps.yl701_info_p->netId%10;
-                            hum_comps.dig2_4=loraComps.yl701_info_p->breathTime%10;
-                            hum_comps.dig2_5=loraComps.yl701_info_p->breathPeriod%10;
-
-                            
-                        }
-                        display_line0_data();
-                        display_line2_data();  
-                        hum_comps.dis_oper_mark._bit.refresh_device_id_high=0;
-                   }
-                    if(hum_comps.dis_oper_mark._bit.refresh_ver)
-                    {
-                        hum_comps.dot4_pos=1;
-                        hum_comps.dig4_0=MD_FL_VER%10;
-                        hum_comps.dig4_1=MD_FL_VER/10%10;
-                        hum_comps.dig4_2=MD_HIDE_DISP-1;
-                        hum_comps.dig4_3=0x0f;
-                        hum_comps.dig4_4=MD_HIDE_DISP;
-                        hum_comps.dig4_5=MD_HIDE_DISP;
-                        hum_comps.dig4_6=MD_HIDE_DISP;
-                        hum_comps.dig4_7=MD_HIDE_DISP;
-                        hum_comps.dig4_8=MD_HIDE_DISP;
-                        
-                        display_line4_data();    // 
-                        hum_comps.dis_oper_mark._bit.refresh_ver=0;
-                    }
-
-                break;
-    }
-
 //        if(hum_comps.dis_oper_mark._bit.refresh_option)
 //        {
 //            display_opt(opt);
@@ -3791,7 +3702,7 @@ mode_comps_t  mode_comps[]=//Handling of keys in different modes
     {"self_test_mode"    ,mode_comps+7  ,EM_SELF_TEST_MODE     ,nop                       ,nop                       ,nop          	            ,nop			                 ,nop               	         ,nop                            ,nop                            ,self_test_mode_display   ,0,0},
     {"report_mode"       ,mode_comps+8  ,EM_REPORT_MODE        ,nop                       ,nop                       ,nop          	            ,nop			                 ,nop               	         ,nop                            ,nop                            ,report_mode_display      ,0,0},
     {"air_leak_mode"     ,mode_comps+9  ,EM_AIR_LEAK_MODE      ,nop                       ,nop                       ,air_leak_mode_on_j_key    ,nop			                 ,air_leak_mode_on_long_m_key    ,normal_mode_on_long_j_key      ,normal_mode_on_long_s_and_j_key,air_leak_mode_display    ,0,0},
-    {"lora mode"         ,mode_comps+10 ,EM_LORA_MODE          ,normal_mode_on_s_key      ,lora_mode_on_m_key        ,normal_mode_on_j_key      ,normal_mode_on_long_s_key       ,normal_mode_on_long_m_key      ,normal_mode_on_long_j_key      ,normal_mode_on_long_s_and_j_key,lora_mode_display      ,0,0},
+    {"lora mode"         ,mode_comps+10 ,EM_LORA_MODE          ,nop                       ,lora_mode_on_m_key        ,nop                       ,nop			                 ,nop                            ,normal_mode_on_long_j_key      ,normal_mode_on_long_s_and_j_key,lora_mode_display        ,0,0},
 };
 
 static void hum_comps_task_handle()////Execution interval is 50 ms

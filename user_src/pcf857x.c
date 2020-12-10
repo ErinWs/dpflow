@@ -12,19 +12,19 @@
 #define  MD_PCF857X_I2C_RETURN_FALSE    {MD_PCF857X_I2C_SCL=0;return MD_PCF857X_I2C_FALSE;}
 #define  MD_PCF857X_I2C_RETURN_TRUE     {return MD_PCF857X_I2C_TRUE;}
 
-static void DelayMs(unsigned short TimeMs)
-{
-	unsigned short j;
-	unsigned short  i;
-	for(j=0;j<TimeMs*10;j++)
-	{		
-		i=97;	//100us at 8Mhz
-		while(i>0) 
-		{	
-			i--;
-		}
-	}
-}
+//static void DelayMs(unsigned short TimeMs)
+//{
+//	unsigned short j;
+//	unsigned short  i;
+//	for(j=0;j<TimeMs*10;j++)
+//	{		
+//		i=97;	//100us at 8Mhz
+//		while(i>0) 
+//		{	
+//			i--;
+//		}
+//	}
+//}
 static void PCF857X_I2CDelay(void)	
 {	unsigned char i;
 	i=7;	    //10us at 8Mhz

@@ -15,10 +15,10 @@
 #define  MD_DIS4                4
 #define  MD_DIS_DIG              MD_DIS5
 
-//#define   MD_MODBUS            //modbus rs485 use irc interface,no sleep
+#define   MD_MODBUS            //modbus rs485 use irc interface,no sleep
 //#define   MD_NO_LCD
 //#define   MD_TEMP		        //temp display line 2
-//#define   MD_IGNORE_ALL_ERR
+#define     MD_IGNORE_ALL_ERR
 #define     MD_USE_RTC_MODULE
 #define     MD_USE_4_20MA_MODULE
 
@@ -297,6 +297,7 @@ typedef struct _DEVICE_COMPONENTS
                 unsigned char lora_module_err		            :1;
                 unsigned char pcf857x_driver_err		        :1;
                 unsigned char ad54x0_driver_err		            :1;
+				unsigned char res		            			:1;
                 
                 unsigned char temp_adc_stb	                    :1;
                 unsigned char isPLowRealseTriggered             :1;

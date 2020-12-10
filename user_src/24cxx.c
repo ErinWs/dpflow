@@ -21,7 +21,7 @@ int      MD_I2C_WP;
 
 static void DelayMs(unsigned short TimeMs)
 {
-	unsigned short j;
+	volatile unsigned short j;
 	unsigned short  i;
 	for(j=0;j<TimeMs*10;j++)
 	{		

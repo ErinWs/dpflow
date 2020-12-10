@@ -95,29 +95,29 @@ unsigned char Check_Sum_5A(unsigned char const *Data,unsigned char Len)
     return Sum;
 }
 
-long formatData4fixDot(long temp,int dot)
+long formatData4fixDot(long temp)
 {
-    if(dot==5)
+    if(device_comps.calibration_param.dot==5)
     {
         temp/=10;
     }
-    else if(dot==4)
+    else if(device_comps.calibration_param.dot==4)
     {
         temp/=1;
     }
-    else if(dot==3)
+    else if(device_comps.calibration_param.dot==3)
     {
         temp*=10;
     }
-    else if(dot==2)
+    else if(device_comps.calibration_param.dot==2)
     {
         temp*=100;
     }
-    else if(dot==1)
+    else if(device_comps.calibration_param.dot==1)
     {
         temp*=1000;
     }
-    else if(dot==0)
+    else if(device_comps.calibration_param.dot==0)
     {
         temp*=10000;
     }
@@ -286,13 +286,13 @@ static unsigned char Pro_irc(unsigned char Cmd,unsigned char *buf)
 					ircMisc.send_buf[i++]=buf[12];
 					                                        //add full range ...
 					
-					temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
+					temp=formatData4fixDot(device_comps.calibration_param.y[3]);
 					ircMisc.send_buf[i++]=temp>>24;
 					ircMisc.send_buf[i++]=temp>>16;
 					ircMisc.send_buf[i++]=temp>>8;
 					ircMisc.send_buf[i++]=temp;
 					                                         //current p
-					temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
+					temp=formatData4fixDot(device_comps.current_press);                                        
 					ircMisc.send_buf[i++]=temp>>24;
 					ircMisc.send_buf[i++]=temp>>16;
 					ircMisc.send_buf[i++]=temp>>8;
@@ -324,32 +324,18 @@ static unsigned char Pro_irc(unsigned char Cmd,unsigned char *buf)
 					ircMisc.send_buf[i++]=buf[12];
 					                                        //add full dpf_deltaP full range ...
 					
-					temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3],device_comps.deltaP_calibration_param.dot);
+					temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3]);
 					ircMisc.send_buf[i++]=temp>>24;
 					ircMisc.send_buf[i++]=temp>>16;
 					ircMisc.send_buf[i++]=temp>>8;
 					ircMisc.send_buf[i++]=temp;
 					                                         //deltaP
-					temp=formatData4fixDot(device_comps.current_deltaP,device_comps.deltaP_calibration_param.dot);                                        
+					temp=formatData4fixDot(device_comps.current_deltaP);                                        
 					ircMisc.send_buf[i++]=temp>>24;
 					ircMisc.send_buf[i++]=temp>>16;
 					ircMisc.send_buf[i++]=temp>>8;
 					ircMisc.send_buf[i++]=temp;
 					ircMisc.send_buf[i++]=(device_comps.deltaP_calibration_param.unit&0x0f);//param unit
-
-                    temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
-                	buf[i++]=temp>>24;
-                	buf[i++]=temp>>16;
-                	buf[i++]=temp>>8;
-                	buf[i++]=temp;
-                	                
-
-            		temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
-                	buf[i++]=temp>>24;
-                	buf[i++]=temp>>16;
-                	buf[i++]=temp>>8;
-                	buf[i++]=temp;
-                    buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
 
                     temp=device_comps.current_flow;
 		            ircMisc.send_buf[i++]=temp>>24;

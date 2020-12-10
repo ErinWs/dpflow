@@ -337,20 +337,6 @@ static unsigned char Pro_irc(unsigned char Cmd,unsigned char *buf)
 					ircMisc.send_buf[i++]=temp;
 					ircMisc.send_buf[i++]=(device_comps.deltaP_calibration_param.unit&0x0f);//param unit
 
-                    temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
-                	buf[i++]=temp>>24;
-                	buf[i++]=temp>>16;
-                	buf[i++]=temp>>8;
-                	buf[i++]=temp;
-                	                
-
-            		temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
-                	buf[i++]=temp>>24;
-                	buf[i++]=temp>>16;
-                	buf[i++]=temp>>8;
-                	buf[i++]=temp;
-                    buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
-
                     temp=device_comps.current_flow;
 		            ircMisc.send_buf[i++]=temp>>24;
 					ircMisc.send_buf[i++]=temp>>16;

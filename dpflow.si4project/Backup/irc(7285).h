@@ -22,6 +22,6 @@ typedef struct
 
 extern ircComps_t ircComps;
 extern  unsigned char Check_Sum_5A(unsigned char const *Data,unsigned char Len);
-extern  long formatData4fixDot(long temp,int dot);
+extern  long formatData4fixDot(long temp);
 
 #endif

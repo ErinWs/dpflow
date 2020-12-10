@@ -1135,7 +1135,6 @@ insert_calc:
         )
         +device_comps.dpf_param.k[Bottom]%10000000/fpwr(device_comps.dpf_param.k[Bottom]/10000000%10);
     }
-    
 ret:
     {
       
@@ -2062,20 +2061,27 @@ static void device_comps_task_handle(void)//Execution interval is 200 ms
          if(sample_en)
          {
             MD_SET_REF_3030C_ON;
-    	    delay_us(400);//400
-    	    
+	    delay_us(400);//400
+	    if(hum_comps.current_mode==EM_CAL_MODIFY_MODE)
+        {
             cs1237_comps.sw._bit.running=1;
             cs1237_comps.restart();//pt100
             cs1237_comps.enable_interrupt();
-       
+        }
+        else if(this->count==2)
+        {
+            cs1237_comps.sw._bit.running=1;
+            cs1237_comps.restart();//pt100
+            cs1237_comps.enable_interrupt();
+        }
 //                NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 //                while(MD_CS1237_DATA);
 //                cs1237_comps.read_adc(&this->temp_p_convert_result[this->temp_p_pos++]);
 //                cs1237_comps.power_down();
 
-            cs123x_comps.sw._bit.running=1;
-            cs123x_comps.restart();
-            cs123x_comps.enable_interrupt();
+        cs123x_comps.sw._bit.running=1;
+        cs123x_comps.restart();
+        cs123x_comps.enable_interrupt();
        
 //                NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 //                while(MD_CS123X_DATA);

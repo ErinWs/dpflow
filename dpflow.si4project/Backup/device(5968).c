@@ -1135,7 +1135,6 @@ insert_calc:
         )
         +device_comps.dpf_param.k[Bottom]%10000000/fpwr(device_comps.dpf_param.k[Bottom]/10000000%10);
     }
-    
 ret:
     {
       

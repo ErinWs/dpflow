@@ -155,13 +155,13 @@ static int add_measure_data(unsigned char Cmd,unsigned int DataId,unsigned char 
 	switch(DataId)
 	{
         case MD_DATA_ID_READ_MEASURE_INFO:
-        	temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
+        	temp=formatData4fixDot(device_comps.calibration_param.y[3]);
         	buf[i++]=temp>>24;
         	buf[i++]=temp>>16;
         	buf[i++]=temp>>8;
         	buf[i++]=temp;
         	                                         //current p
-        	temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
+        	temp=formatData4fixDot(device_comps.current_press);                                        
         	buf[i++]=temp>>24;
         	buf[i++]=temp>>16;
         	buf[i++]=temp>>8;
@@ -170,34 +170,18 @@ static int add_measure_data(unsigned char Cmd,unsigned int DataId,unsigned char 
             buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
             break;
       case MD_DATA_ID_READ_DPF_INFO:
-        	temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3],device_comps.deltaP_calibration_param.dot);
+        	temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3]);
 			buf[i++]=temp>>24;
 			buf[i++]=temp>>16;
 			buf[i++]=temp>>8;
 			buf[i++]=temp;
 			                                         //deltaP
-			temp=formatData4fixDot(device_comps.current_deltaP,device_comps.deltaP_calibration_param.dot);                                        
+			temp=formatData4fixDot(device_comps.current_deltaP);                                        
 			buf[i++]=temp>>24;
 			buf[i++]=temp>>16;
 			buf[i++]=temp>>8;
 			buf[i++]=temp;
 			buf[i++]=(device_comps.deltaP_calibration_param.unit&0x0f);//param unit
-
-			temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
-        	buf[i++]=temp>>24;
-        	buf[i++]=temp>>16;
-        	buf[i++]=temp>>8;
-        	buf[i++]=temp;
-        	                
-
-			temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
-        	buf[i++]=temp>>24;
-        	buf[i++]=temp>>16;
-        	buf[i++]=temp>>8;
-        	buf[i++]=temp;
-            buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
-
-			
 
             temp=device_comps.current_flow;
             buf[i++]=temp>>24;

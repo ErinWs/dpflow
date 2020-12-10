@@ -75,7 +75,6 @@ static int save_yl701_info(void const *buf,int len )
 
 static void write_lora(unsigned char * const buf,unsigned int len)
 {
-	
      loraMisc.send_addr=buf;
      loraMisc.send_len=len;
     if(loraComps.work_st.mode==EM_RUN)
@@ -90,7 +89,7 @@ static void write_lora(unsigned char * const buf,unsigned int len)
    
     if(MD_LORA_EN_PIN)
     {
-        volatile int i=5000;
+        int i=4000;
 	while(i>0)
 	{
 		NOP();
@@ -101,7 +100,7 @@ static void write_lora(unsigned char * const buf,unsigned int len)
         loraComps.sw._bit.sendReq=1;
         loraComps.count=2;//delay50-100ms
         MD_LORA_EN_PIN_RESET;
-    MD_LORA_SET_PIN_RESET;
+	MD_LORA_SET_PIN_RESET;
 	
 	
     }
@@ -143,7 +142,7 @@ static unsigned int  Check_Sum_back_2bytes(unsigned char const *Data,int Len)
 
 static int add_measure_data(unsigned char Cmd,unsigned int DataId,unsigned char *buf,unsigned char rssi)
 {
-    int  i=0;
+    int i=0;
     long temp=0;
     buf[i++]=loraMisc.yl701_info.NodeId>>8;
     buf[i++]=loraMisc.yl701_info.NodeId;
@@ -155,13 +154,13 @@ static int add_measure_data(unsigned char Cmd,unsigned int DataId,unsigned char 
 	switch(DataId)
 	{
         case MD_DATA_ID_READ_MEASURE_INFO:
-        	temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
+        	temp=formatData4fixDot(device_comps.calibration_param.y[3]);
         	buf[i++]=temp>>24;
         	buf[i++]=temp>>16;
         	buf[i++]=temp>>8;
         	buf[i++]=temp;
         	                                         //current p
-        	temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
+        	temp=formatData4fixDot(device_comps.current_press);                                        
         	buf[i++]=temp>>24;
         	buf[i++]=temp>>16;
         	buf[i++]=temp>>8;
@@ -170,34 +169,18 @@ static int add_measure_data(unsigned char Cmd,unsigned int DataId,unsigned char 
             buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
             break;
       case MD_DATA_ID_READ_DPF_INFO:
-        	temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3],device_comps.deltaP_calibration_param.dot);
+        	temp=formatData4fixDot(device_comps.deltaP_calibration_param.y[3]);
 			buf[i++]=temp>>24;
 			buf[i++]=temp>>16;
 			buf[i++]=temp>>8;
 			buf[i++]=temp;
 			                                         //deltaP
-			temp=formatData4fixDot(device_comps.current_deltaP,device_comps.deltaP_calibration_param.dot);                                        
+			temp=formatData4fixDot(device_comps.current_deltaP);                                        
 			buf[i++]=temp>>24;
 			buf[i++]=temp>>16;
 			buf[i++]=temp>>8;
 			buf[i++]=temp;
 			buf[i++]=(device_comps.deltaP_calibration_param.unit&0x0f);//param unit
-
-			temp=formatData4fixDot(device_comps.calibration_param.y[3],device_comps.calibration_param.dot);
-        	buf[i++]=temp>>24;
-        	buf[i++]=temp>>16;
-        	buf[i++]=temp>>8;
-        	buf[i++]=temp;
-        	                
-
-			temp=formatData4fixDot(device_comps.current_press,device_comps.calibration_param.dot);                                        
-        	buf[i++]=temp>>24;
-        	buf[i++]=temp>>16;
-        	buf[i++]=temp>>8;
-        	buf[i++]=temp;
-            buf[i++]=(device_comps.calibration_param.unit&0x0f);//param unit
-
-			
 
             temp=device_comps.current_flow;
             buf[i++]=temp>>24;
@@ -355,57 +338,57 @@ static unsigned char Pro_lora(unsigned char Cmd,unsigned char *buf)
 					break;		
 			*/
 			case MD_DATA_ID_READ_MEASURE_INFO:                //measure info
-//					
-//
-//                    if(!loraComps.sw._bit.reading_rssi)
-//                    {
-//                        int j=0;
-//                        loraComps.sw._bit.reading_rssi=1;
-//                         MD_LORA_INTP_DISABLE();
-//                        loraComps.work_st.mode=EM_CFG;
-//                        loraMisc.dataId=DataId;
-//                        
-//                        loraMisc.send_buf[j++]=0XAF;
-//                        loraMisc.send_buf[j++]=0XAF;
-//                        loraMisc.send_buf[j++]=0x00;
-//                        loraMisc.send_buf[j++]=0x00;
-//                        loraMisc.send_buf[j++]=0xAF;
-//                        loraMisc.send_buf[j++]=0x80; 
-//                        loraMisc.send_buf[j++]=0x06;
-//                        loraMisc.send_buf[j++]=0x02;
-//                        loraMisc.send_buf[j++]=0x00;
-//                        loraMisc.send_buf[j++]=0x00;
-//                        loraMisc.send_buf[j++]=0x95;
-//                        loraMisc.send_buf[j++]=0x0D;
-//                        loraMisc.send_buf[j++]=0x0A;
-//                        loraComps.write(loraMisc.send_buf,j);
+					
+
+                    if(!loraComps.sw._bit.reading_rssi)
+                    {
+                        int j=0;
+                        loraComps.sw._bit.reading_rssi=1;
+                         MD_LORA_INTP_DISABLE();
+                        loraComps.work_st.mode=EM_CFG;
+                        loraMisc.dataId=DataId;
+                        
+                        loraMisc.send_buf[j++]=0XAF;
+                        loraMisc.send_buf[j++]=0XAF;
+                        loraMisc.send_buf[j++]=0x00;
+                        loraMisc.send_buf[j++]=0x00;
+                        loraMisc.send_buf[j++]=0xAF;
+                        loraMisc.send_buf[j++]=0x80; 
+                        loraMisc.send_buf[j++]=0x06;
+                        loraMisc.send_buf[j++]=0x02;
+                        loraMisc.send_buf[j++]=0x00;
+                        loraMisc.send_buf[j++]=0x00;
+                        loraMisc.send_buf[j++]=0x95;
+                        loraMisc.send_buf[j++]=0x0D;
+                        loraMisc.send_buf[j++]=0x0A;
+                        loraComps.write(loraMisc.send_buf,j);
+                        return 3+buf[1];
+                        
+                    }
+                    else if(loraComps.sw._bit.read_rssi_ok)
+                    {
+//                        loraComps.sw._bit.reading_rssi=0;
+//                        loraComps.sw._bit.read_rssi_ok=0;
+//                        loraComps.sw._bit.refresh_rssi=1;
+//                        i+=add_measure_data(Cmd,DataId,&loraMisc.send_buf[i],loraMisc.yl701_info.rssi);
+//                       
+//                        loraComps.work_st.mode=EM_RUN;
+//                        loraComps.write(loraMisc.send_buf,i);
 //                        return 3+buf[1];
+                    }
+                    else if(loraComps.op_window_time<0)
+                    {
+//                        loraComps.sw._bit.reading_rssi=0;
+//                        loraComps.sw._bit.read_rssi_ok=0;
 //                        
-//                    }
-//                    else if(loraComps.sw._bit.read_rssi_ok)
-//                    {
-////                        loraComps.sw._bit.reading_rssi=0;
-////                        loraComps.sw._bit.read_rssi_ok=0;
-////                        loraComps.sw._bit.refresh_rssi=1;
-////                        i+=add_measure_data(Cmd,DataId,&loraMisc.send_buf[i],loraMisc.yl701_info.rssi);
-////                       
-////                        loraComps.work_st.mode=EM_RUN;
-////                        loraComps.write(loraMisc.send_buf,i);
-////                        return 3+buf[1];
-//                    }
-//                    else if(loraComps.op_window_time<0)
-//                    {
-////                        loraComps.sw._bit.reading_rssi=0;
-////                        loraComps.sw._bit.read_rssi_ok=0;
-////                        
-////                        i+=add_measure_data(Cmd,DataId,&loraMisc.send_buf[i],0);
-////                       
-////                        loraComps.work_st.mode=EM_RUN;
-////                        loraComps.write(loraMisc.send_buf,i);
-////                        return 3+buf[1];
-//                    }
-//                   return 0;
-//                   break;
+//                        i+=add_measure_data(Cmd,DataId,&loraMisc.send_buf[i],0);
+//                       
+//                        loraComps.work_st.mode=EM_RUN;
+//                        loraComps.write(loraMisc.send_buf,i);
+//                        return 3+buf[1];
+                    }
+                   return 0;
+                   break;
            case MD_DATA_ID_READ_DPF_INFO:                //measure dpf_info
 					
 
@@ -902,7 +885,7 @@ static unsigned char Check_lora_Com(unsigned char *Rec_Data,unsigned char Rec_Po
     	if((Rec_Data[0]==0x00)||(Rec_Data[0]==0x01)&&(Rec_Data[2]==0x90))
     	{
         
-    	    	if((Rec_Data[3]!=0x21)&&(Rec_Data[3]!=0x25)&&(Rec_Data[3]!=0x1f)&&(Rec_Data[3]!=0x01)&&(Rec_Data[3]!=0x04))
+    	    	if((Rec_Data[3]!=0x21)&&(Rec_Data[3]!=0x1f)&&(Rec_Data[3]!=0x01)&&(Rec_Data[3]!=0x04))
     	    	{
     	    	    return 1;
     	    	}
@@ -1074,7 +1057,6 @@ static void lora_comps_task_50ms(void)
             {
                 loraComps.work_st.mode=EM_RUN;
                 loraComps.sw._bit.reading_rssi=0; 
-		loraComps.sw._bit.busy=0; 
                 enter_cad_mode();
                 NOP();
             }

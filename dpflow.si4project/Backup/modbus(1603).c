@@ -246,7 +246,7 @@ static unsigned char Pro_modbus(unsigned char Cmd,unsigned char *buf,int len)
                 
 		  case 1:                //baud
 		        tmp=buf[5];
-		        if(tmp>0&&tmp<4)
+		        if(tmp>0&&tmp<5)
 		        {
     				modbusMisc.param.baud=tmp;
     				
@@ -404,7 +404,7 @@ static void  modbusComps_task_handle(void)
         {
             modbusMisc.param.baud=3;
         }
-        if(modbusMisc.param.baud==0||modbusMisc.param.baud>3)
+        if(modbusMisc.param.baud==0||modbusMisc.param.baud>4)
         {
             modbusMisc.param.baud=3;
         }
