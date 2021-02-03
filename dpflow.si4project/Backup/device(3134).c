@@ -1434,16 +1434,6 @@ static unsigned char device_comps_init(device_comps_t *const this)
 			device_comps.sw._bit.e2prom_driver_err=1;
 		}
 	}
-	
-    if(device_comps.sw._bit.lora_module_err)    
-    {
-        if(loraComps.sw._bit.init_ok)   
-        {
-            device_comps.sw._bit.lora_module_err=0;
-        }
-    }
-
-	
 	if(device_comps.sw._bit.cs123x_driver_err)	
 	{
 		if(!cs123x_comps.Init(0x74))//74
@@ -1476,7 +1466,13 @@ static unsigned char device_comps_init(device_comps_t *const this)
     	}
 	}
 	
-	
+	if(device_comps.sw._bit.lora_module_err)	
+	{
+	    if(loraComps.sw._bit.init_ok)	
+    	{
+    	    device_comps.sw._bit.lora_module_err=0;
+    	}
+	}
 	
     if(device_comps.sw._bit.pcf857x_driver_err)  
     {

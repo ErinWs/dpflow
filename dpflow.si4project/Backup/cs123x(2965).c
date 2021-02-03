@@ -218,50 +218,14 @@ static int CS1237_ReadAD(int32 *ad)
 
 static int CS1237_Init(unsigned char dat)
 {
-//      long ad;
-//      unsigned char reg;
-//      CS1237_Restart();
-//      while(MD_CS1237_DATA);
-//      CS1237_WriteReg(&ad,dat);        //
-//      NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-//      
-//      while(MD_CS1237_DATA);
-//      reg=CS1237_ReadReg(&ad);
-//      CS1237_Power_Down();
-//      if(dat!=reg)
-//      {
-//        return 1;
-//      }
-//      else
-//      {
-//        return 0;
-//      }
-//      
       long ad;
-      volatile long timer=150000;
       unsigned char reg;
       CS1237_Restart();
-      while(MD_CS1237_DATA)
-      {
-        timer--;
-        if(timer==0)
-        {
-            return 1;
-        }
-      }
+      while(MD_CS1237_DATA);
       CS1237_WriteReg(&ad,dat);        //
       NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
       
-      timer=150000;
-      while(MD_CS1237_DATA)
-      {
-        timer--;
-        if(timer==0)
-        {
-            return 1;
-        }
-      }
-      
+      while(MD_CS1237_DATA);
       reg=CS1237_ReadReg(&ad);
       CS1237_Power_Down();
       if(dat!=reg)
@@ -518,50 +482,14 @@ static int CS123x_ReadAD(int32 *ad)
 
 static int CS123x_Init(unsigned char dat)
 {
-//      long ad;
-//      unsigned char reg;
-//      CS123x_Restart();
-//      while(MD_CS123X_DATA);
-//      CS123x_WriteReg(&ad,dat);        //
-//      NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-//      
-//      while(MD_CS123X_DATA);
-//      reg=CS123x_ReadReg(&ad);
-//      CS123x_Power_Down();
-//      if(dat!=reg)
-//      {
-//        return 1;
-//      }
-//      else
-//      {
-//        return 0;
-//      }
-
       long ad;
-      volatile long timer=150000;
       unsigned char reg;
       CS123x_Restart();
-      while(MD_CS123X_DATA)
-      {
-        timer--;
-        if(timer==0)
-        {
-            return 1;
-        }
-      }
+      while(MD_CS123X_DATA);
       CS123x_WriteReg(&ad,dat);        //
       NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
       
-      timer=150000;
-      while(MD_CS123X_DATA)
-      {
-        timer--;
-        if(timer==0)
-        {
-            return 1;
-        }
-      }
-      
+      while(MD_CS123X_DATA);
       reg=CS123x_ReadReg(&ad);
       CS123x_Power_Down();
       if(dat!=reg)

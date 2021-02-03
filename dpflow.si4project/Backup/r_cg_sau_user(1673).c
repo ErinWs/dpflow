@@ -290,7 +290,7 @@ static void r_uart2_callback_sendend(void)
     {
 	    loraComps.op_window_time=0;
 	    loraComps.sw._bit.reading_rssi=0;
-        MD_LORA_INTP_ENABLE();
+            enter_cad_mode();
     }
     /* End user code. Do not edit comment generated here */
 }

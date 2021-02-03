@@ -152,7 +152,7 @@ static unsigned char write_eeprom(unsigned int addr,  void const *buf, unsigned 
 	MD_I2C_WP=0; 
 reStart:
 	SlaveAddr = 0xA0 + (unsigned char)((addr & 0x0700)>>7);
-	for(w_wait=0; w_wait<64; w_wait++)
+	for(w_wait=0; w_wait<4; w_wait++)
 	{
 		I2CStart();
 		if(MD_I2C_STATUS_TRUE == I2CByteTX(SlaveAddr))
@@ -163,7 +163,7 @@ reStart:
 		I2CStop();
 		DelayMs(1);
 	}	
-	if(w_wait >= 64) 
+	if(w_wait >= 4) 
 	{
 	    MD_I2C_RETURN_FALSE;
 	}
@@ -204,7 +204,7 @@ static unsigned char read_eeprom(unsigned int addr, void *buf, unsigned int n)
 	MD_I2C_VCC = 1;
 	I2CDelay(); 	
 	SlaveAddr = 0xA0 + (unsigned char)((addr & 0x0700)>>7);	
-	for(w_wait=0; w_wait<64; w_wait++)
+	for(w_wait=0; w_wait<4; w_wait++)
 	{
 		I2CStart();
 		if(MD_I2C_STATUS_TRUE == I2CByteTX(SlaveAddr))
@@ -216,7 +216,7 @@ static unsigned char read_eeprom(unsigned int addr, void *buf, unsigned int n)
 		DelayMs(1);
 	}
 	
-	if(w_wait >= 64)
+	if(w_wait >= 4)
 	{
 	    MD_I2C_RETURN_FALSE;
 	}
